@@ -1,24 +1,33 @@
-import { env, createExecutionContext, waitOnExecutionContext, SELF } from 'cloudflare:test';
 import { describe, it, expect } from 'vitest';
 import worker from '../src/index';
 
-// For now, you'll need to do something like this to get a correctly-typed
-// `Request` to pass to `worker.fetch()`.
-const IncomingRequest = Request<unknown, IncomingRequestCfProperties>;
+describe('Worker Request Details (unit)', () => {
+	it('returns HTML with request details', async () => {
+		const request = new Request('http://example.com/secure');
+		// call fetch directly; cast to any to avoid needing full Env/Context types
+		const response = await (worker as any).fetch(request, {} as any, {} as any);
 
-describe('Hello World worker', () => {
-	it('responds with Hello World! (unit style)', async () => {
-		const request = new IncomingRequest('http://example.com');
-		// Create an empty context to pass to `worker.fetch()`.
-		const ctx = createExecutionContext();
-		const response = await worker.fetch(request, env, ctx);
-		// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
-		await waitOnExecutionContext(ctx);
-		expect(await response.text()).toMatchInlineSnapshot(`"Hello World!"`);
+		expect(response.status).toBe(200);
+		expect(response.headers.get('content-type')).toMatch(/text\/html/);
+
+		const body = await response.text();
+		expect(body).toContain('Request Details');
+		expect(body).toContain('User Email:');
+		expect(body).toContain('No Access Header Found');
+		expect(body).toContain('/secure/PH');
+		// ISO timestamp (simple check)
+		expect(body).toMatch(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/);
 	});
 
-	it('responds with Hello World! (integration style)', async () => {
-		const response = await SELF.fetch('https://example.com');
-		expect(await response.text()).toMatchInlineSnapshot(`"Hello World!"`);
+	it('returns HTML with flag', async () => {
+		const request = new Request('http://example.com/secure/PH');
+		// call fetch directly; cast to any to avoid needing full Env/Context types
+		const response = await (worker as any).fetch(request, {} as any, {} as any);
+
+		expect(response.status).toBe(200);
+		expect(response.headers.get('content-type')).toMatch(/text\/html/);
+
+		const body = await response.text();
+		expect(body).toContain('PH');
 	});
 });
