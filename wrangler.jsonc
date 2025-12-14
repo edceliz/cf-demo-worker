@@ -10,7 +10,13 @@
 	"workers_dev": false,
 	"observability": {
 		"enabled": true
-	}
+	},
+	"r2_buckets": [
+		{
+			"binding": "FLAG_BUCKET",
+			"bucket_name": "flags" // Pre-created using Terraform
+		}
+	]
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
