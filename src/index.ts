@@ -18,7 +18,7 @@ export default {
           <title>Worker Request Details</title>
           <style>
             body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; }
-            .card { border: 1px solid #ccc; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+            .card { border: 1px solid #e6e6e6; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.06); text-align: left; background: #fff; }
             h1 { color: #f6821f; }
             .item { margin-bottom: 1rem; }
             .label { font-weight: bold; color: #555; display: block; margin-bottom: 0.25rem; }
@@ -71,19 +71,20 @@ export default {
         <head>
           <title>Secure Country</title>
           <style>
-            body { font-family: sans-serif; padding: 2rem; text-align: center; background-color: #f4f4f4; }
-            .container { background: white; padding: 3rem; border-radius: 12px; display: inline-block; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-            h1 { font-size: 3rem; margin: 0 0 1rem 0; }
-            img { width: 200px; height: auto; border: 1px solid #ddd; }
-            .back-link { display: block; margin-top: 2rem; color: #555; text-decoration: none; }
-            .back-link:hover { text-decoration: underline; }
+            body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; }
+            .card { border: 1px solid #e6e6e6; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.06); text-align: center; background: #fff; }
+            h1 { color: #f6821f; font-size: 2.5rem; margin: 0 0 0.5rem 0; }
+            .flag { width: 220px; height: auto; margin: 1rem 0; border-radius: 6px; border: 1px solid #eaeaea; }
+            .meta { color: #555; margin-top: 0.5rem; }
+            .back-link { display: inline-block; margin-top: 1rem; color: #0070f3; text-decoration: none; border-bottom: 1px dashed #0070f3; padding-bottom: 2px; }
+            .back-link:hover { border-bottom-style: solid; }
           </style>
         </head>
         <body>
-          <div class="container">
+          <div class="card">
             <h1>${countryCode}</h1>
-            <img src="${flagUrl}" alt="Flag of ${countryCode}" onerror="this.style.display='none';this.insertAdjacentHTML('afterend', '<p>Flag not found</p>')"/>
-
+            <img class="flag" src="${flagUrl}" alt="Flag of ${countryCode}"/>
+            <div class="meta">Country code: <strong>${countryCode}</strong></div>
             <a href="/secure" class="back-link">← Back to Details</a>
           </div>
         </body>
