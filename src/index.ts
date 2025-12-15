@@ -146,7 +146,7 @@ export default {
             <h1>${countryCode.toUpperCase()}</h1>
             <img class="flag" src="https://assets.edceliz.com/${flagKey}" alt="Flag of ${countryCode}"/>
 						<p>This flag is served from R2 Storage.</p>
-						<p>Source: https://assets.edceliz.com/${flagKey}</p>
+						<p>Source: <a href="https://assets.edceliz.com/${flagKey}">https://assets.edceliz.com/${flagKey}</a></p>
             <div class="meta">Country code: <strong>${countryCode.toUpperCase()}</strong></div>
             <a href="/secure" class="back-link">← Back to Details</a>
           </div>

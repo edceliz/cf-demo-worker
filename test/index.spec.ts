@@ -30,4 +30,16 @@ describe('Worker Request Details (unit)', () => {
 		const body = await response.text();
 		expect(body).toContain('PH');
 	});
+
+	it('returns HTML with flag', async () => {
+		const request = new Request('http://example.com/secure/PH-r2');
+		// call fetch directly; cast to any to avoid needing full Env/Context types
+		const response = await (worker as any).fetch(request, {} as any, {} as any);
+
+		expect(response.status).toBe(200);
+		expect(response.headers.get('content-type')).toMatch(/text\/html/);
+
+		const body = await response.text();
+		expect(body).toContain('PH');
+	});
 });
